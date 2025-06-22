@@ -183,6 +183,29 @@ print(new_list)
 
 </sample-output>
 
+When you use [:] to copy a list, you're making what's called a 'shallow copy.' This works great for simple lists of numbers or text. However, if your list contains other lists (or other complex items), [:] only copies references to those inner lists. This means that if you attempt to change something inside an inner list in your copy, you'll see the change in the original list too. To make a copy where changes to the inner lists don't affect the originals, you need to make a 'deep copy' – a copy that includes fresh copies of all the inner lists as well by iterating through the inner lists and appending the copies:
+
+```python
+list = [[1, 2], [3, 4]]
+
+list_copy = []
+for inner_list in list:
+    new_inner_list = inner_list[:]
+    list_copy.append(new_inner_list)
+
+list_copy[0][0] = 99
+
+print("Original list:", list)
+print("Copied list:", list_copy)
+```
+<sample-output>
+
+Original list: [[1, 2], [3, 4]]
+Copied list: [[99, 2], [3, 4]]
+
+</sample-output>
+
+
 ## Using lists as parameters in functions
 
 When you pass a list as an argument to a function, you are passing a reference to that list. This means that the function can modify the list directly.
